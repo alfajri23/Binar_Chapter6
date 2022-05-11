@@ -1,4 +1,4 @@
-# Getting Started with Create React App
+# DISCLAIMER
 
 Karena terdapat masalah pada API rent car dan juga project challenge sisi server saya belum jadi,
 Maka saya menggunakan API buatan saya sendiri ( sudah ada JWT ) untuk mengerjakan proses login dan registernya
