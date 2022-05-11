@@ -1,8 +1,15 @@
 import React from 'react'
 import { Link } from "react-router-dom";
 import {connect} from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 const Navbar = (props) => {
+  let navigate = useNavigate();
+
+  const logout = () =>{
+    localStorage.setItem('login', false);
+    navigate("/login");
+  }
   return (
     <>
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
@@ -18,7 +25,8 @@ const Navbar = (props) => {
               <p className="nav-link mx-2 font-hel font-14 font-w400">Testimonial</p>
               <p className="nav-link mx-2 font-hel font-14 font-w400">FAQ</p>
               <p className="nav-link mx-2 font-hel font-14 font-w400">
-                  <Link to='/register' className="btn btn-md btn-success">Register</Link>
+                { !localStorage.getItem('login') ? (<Link to='/register' className="btn btn-md btn-success">Register</Link>) : (<button onClick={logout} className="btn btn-md btn-danger">Logout</button>)}
+                  
               </p>        
             </div>
            </div>

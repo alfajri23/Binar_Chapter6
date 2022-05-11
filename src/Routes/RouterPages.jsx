@@ -4,6 +4,7 @@ import {
     Routes,
     Route,
 } from "react-router-dom";
+import { Admin } from '../Pages/Admin';
 import Detail from '../Pages/Detail';
 import Home from '../Pages/Home';
 import { Login } from '../Pages/Login';
@@ -16,6 +17,10 @@ const RouterPages = () => {
         <Browser>
             <Routes>
                 <Route path="/" element={<Home/>}></Route>
+            </Routes>
+
+            <Routes>
+                <Route path="/admin" element={<Admin/>}></Route>
             </Routes>
 
             <Routes>

@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import React, { useState } from 'react'
 
 export const Register = () => {
+    const [success, setSuccess] = useState(false);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [msg, setMsg] = useState('');
@@ -13,19 +14,21 @@ export const Register = () => {
 
     const Auth = async (e) => {
         e.preventDefault();
-        //navigate("/");
-        console.log("data");
         let result;
         
         try {
-            let register = await axios.post('https://rent-cars-api.herokuapp.com/admin/auth/register', {
-                email: email,
-                password: password
-            });
+            // let register = await axios.post('http://localhost:8000/api/register', {
+            //     email: email,
+            //     password: password
+            // });
 
-            result = await register;
-            console.log(result);
-            navigate("/");
+            // result = await register;
+            setSuccess(true);
+
+            setTimeout(() => {
+                navigate("/login");
+            },2000);
+
         } catch (error) {
             if (error.response) {
                 setMsg(error.response.data.msg);
@@ -47,6 +50,11 @@ export const Register = () => {
             <div className="col-5 d-flex justify-content-center">
                 <div className="d-flex flex-column justify-content-center align-content-center" style={{width:`18rem`}}>
                     <h4 className="mb-5 fw-bold">Create new Account</h4>
+                    {success && (
+                    <div class="alert alert-success" role="alert">
+                        Sukses mendaftar
+                    </div>
+                    )}
                     <form onSubmit={Auth}>
                         <div className="mb-3">
                             <label className="form-label">Email address</label>
@@ -59,7 +67,7 @@ export const Register = () => {
                         <div className="row px-3">
                             <button type="submit" className="btn btn-primary">Sign Up</button>
                         </div>
-                        <p class="fw-lighter text-center"><small>Already have an account? <Link to="/login">Login</Link></small></p>
+                        <p className="fw-lighter text-center"><small>Already have an account? <Link to="/login">Login</Link></small></p>
                     </form>
                 </div>
             </div>

@@ -1,5 +1,7 @@
 import Logins from '../Assets/Img/Login.png';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import jwt_decode from "jwt-decode";
 
 import React, { useState } from 'react'
 
@@ -11,19 +13,35 @@ export const Login = () => {
 
     const Auth = async (e) => {
         e.preventDefault();
-        navigate("/");
+        let result;
 
-        // try {
-        //     await fetch.post('http://localhost:5000/login', {
-        //         email: email,
-        //         password: password
-        //     });
-        //     navigate("/dashboard");
-        // } catch (error) {
-        //     if (error.response) {
-        //         setMsg(error.response.data.msg);
-        //     }
-        // }
+        try {
+            let register = await axios.post('http://localhost:8000/api/login', {
+                email: email,
+                password: password
+            });
+
+            result = await register;
+            //console.log(result.data.data.role);
+            console.log(result.data.token);
+            //const decoded = jwt_decode(result.data.token);
+            //console.log(decoded);
+            //navigate("/");
+
+            localStorage.setItem('login', true);
+
+            if(result.data.data.role != 'admin'){
+                navigate("/");
+            }else{
+                navigate("/admin");
+            }
+
+
+        } catch (error) {
+            if (error.response) {
+                setMsg(error.response.data.msg);
+            }
+        }
     }
 
 
@@ -50,6 +68,7 @@ export const Login = () => {
                         </div>
                         <div className="row px-3">
                             <button type="submit" className="btn btn-primary">Sign In</button>
+                            <button className="btn btn-outline-success btn-sm mt-2">Sign In with Google</button>
                         </div>
                     </form>
                 </div>

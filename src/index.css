@@ -232,3 +232,33 @@ body{
 
 }
 
+/* Admin */
+.sidebar-inner{
+  width: 200px;
+}
+
+aside{
+  width:60px;
+  padding:0 5px;
+}
+
+.fa-white{
+  color:white !important;
+}
+
+.text-label{
+  border-left: 4px solid blue;
+  padding-left:8px
+
+}
+
+.w-50{
+  width:50%;
+}
+
+.w-100{
+  width:100%;
+}
+
+
+
