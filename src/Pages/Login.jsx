@@ -7,6 +7,7 @@ import React, { useState } from 'react'
 
 export const Login = () => {
     const [email, setEmail] = useState('');
+    const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [msg, setMsg] = useState('');
     let navigate = useNavigate();
@@ -16,21 +17,26 @@ export const Login = () => {
         let result;
 
         try {
-            let register = await axios.post('http://localhost:8000/api/login', {
+            // let register = await axios.post('http://localhost:8000/api/login', {
+            let register = await axios.post('http://localhost:8080/api/auth/signin', {
+                username: username,
                 email: email,
                 password: password
             });
 
             result = await register;
             //console.log(result.data.data.role);
-            console.log(result.data.token);
-            //const decoded = jwt_decode(result.data.token);
-            //console.log(decoded);
+            //console.log(result.data.roles[0]);
+            const decoded = jwt_decode(result.data.accessToken);
+            console.log(decoded);
             //navigate("/");
 
-            localStorage.setItem('login', true);
+            console.log(result.data);
 
-            if(result.data.data.role != 'admin'){
+            localStorage.setItem('login', true);
+            localStorage.setItem('data', JSON.stringify(result.data));
+
+            if(result.data.roles[0] == 'ROLE_USER'){
                 navigate("/");
             }else{
                 navigate("/admin");
@@ -58,6 +64,10 @@ export const Login = () => {
                 <div className="d-flex flex-column justify-content-center align-content-center" style={{width:`18rem`}}>
                     <h4 className="mb-5 fw-bold">Welcome,Admin BCR</h4>
                     <form onSubmit={Auth}>
+                    <div className="mb-3">
+                            <label className="form-label">Username</label>
+                            <input type="text" className="form-control" value={username} onChange={(e) => setUsername(e.target.value)}/>
+                        </div>
                         <div className="mb-3">
                             <label className="form-label">Email address</label>
                             <input type="email" className="form-control" value={email} onChange={(e) => setEmail(e.target.value)}/>

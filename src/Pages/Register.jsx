@@ -7,6 +7,7 @@ import React, { useState } from 'react'
 
 export const Register = () => {
     const [success, setSuccess] = useState(false);
+    const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [msg, setMsg] = useState('');
@@ -17,12 +18,15 @@ export const Register = () => {
         let result;
         
         try {
+            let register = await axios.post('http://localhost:8080/api/auth/signup', {
             // let register = await axios.post('http://localhost:8000/api/register', {
-            //     email: email,
-            //     password: password
-            // });
+                username: username,
+                email: email,
+                password: password
+            });
 
-            // result = await register;
+            result = await register;
+            console.log(result);
             setSuccess(true);
 
             setTimeout(() => {
@@ -56,6 +60,10 @@ export const Register = () => {
                     </div>
                     )}
                     <form onSubmit={Auth}>
+                        <div className="mb-3">
+                            <label className="form-label">Username</label>
+                            <input type="text" className="form-control" value={username} onChange={(e) => setUsername(e.target.value)}/>
+                        </div>
                         <div className="mb-3">
                             <label className="form-label">Email address</label>
                             <input type="email" className="form-control" value={email} onChange={(e) => setEmail(e.target.value)}/>
